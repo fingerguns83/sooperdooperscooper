@@ -1,0 +1,39 @@
+name: SooperDooperScooper
+version: '${project.version}'
+main: net.fg83.sooperdooperscooper.SDS
+api-version: 1.19
+prefix: SooperDooperScooper
+authors: [fingerguns83]
+description: Easily disable/enable villager AI with nametags.
+website: https://fg83.net
+permissions:
+  sds:
+    description: Gives player access to all functionality.
+    default: op
+    children:
+      sds.globalNoBrains:
+        description: Allows player to lobotomize any mob.
+        default: false
+      sds.globalGiveBrains:
+        description: Allows player to un-lobotomize any mob.
+        default: false
+      sds.villager:
+        description: Allows player to lobotomize and un-lobotomize villagers.
+        default: false
+        children:
+          sds.villager.noBrains:
+            description: Allows player to lobotomize villagers.
+            default: false
+          sds.villager.giveBrains:
+            description: Allows player to un-lobotomize villagers.
+            default: false
+      sds.piglin:
+        description: Allows player to lobotomize and un-lobotomize piglins.
+        default: false
+        children:
+          sds.piglin.noBrains:
+            description: Allows player to lobotomize piglins.
+            default: false
+          sds.piglin.giveBrains:
+            description: Allows player to un-lobotomize villagers.
+            default: false

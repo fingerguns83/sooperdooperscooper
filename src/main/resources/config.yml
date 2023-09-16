@@ -1,0 +1,43 @@
+# VILLAGERS
+#-------------------------------------
+
+# Enable NoAI Villager Tags
+villager-tags: true
+
+# Villagers with their AI removed will not automatically restock trades.
+# This parameter will force villagers to restock their trades x times per day (evenly spaced).
+daily-restock-count: 2
+
+# Setting this to false will apply the above restock count to all villagers,
+# not just villagers with their AI removed.
+noai-only: true
+
+# Setting this to true will prevent villagers from restocking between 18:00 and 06:00.
+# The restocking interval calculated from "daily-restock-count" will be adjusted accordingly.
+daytime-hours-only: false
+
+# Setting this to true will prevent villagers from restocking between 15:00 and 08:00.
+# The restocking interval calculated from "daily-restock-count" will be adjusted accordingly.
+# This setting supersedes "daytime-hours-only"
+working-hours-only: false
+
+
+# PIGLINS
+#-------------------------------------
+
+# Enable NoAI Piglin Tags
+piglin-tags: true
+
+
+# GLOBAL
+#-------------------------------------
+
+# Setting this to true will allow any mob to be lobotomized/un-lobotomized.
+# This includes villagers and piglins--even if you have them set to "false" above.
+global-tags: false
+
+# UTILITY
+#-------------------------------------
+# Sends a message in console whenever villagers restock.
+# Gets really annoying if you leave it on when you're not testing.
+console-shows-restocking: false
