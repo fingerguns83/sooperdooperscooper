@@ -1,7 +1,7 @@
 name: SooperDooperScooper
 version: '${project.version}'
 main: net.fg83.sooperdooperscooper.SDS
-api-version: 1.19
+api-version: 1.21.4
 prefix: SooperDooperScooper
 authors: [fingerguns83]
 description: Easily disable/enable villager AI with nametags.
@@ -11,10 +11,10 @@ permissions:
     description: Gives player access to all functionality.
     default: op
     children:
-      sds.globalNoBrains:
+      sds.noBrains:
         description: Allows player to lobotomize any mob.
         default: false
-      sds.globalGiveBrains:
+      sds.giveBrains:
         description: Allows player to un-lobotomize any mob.
         default: false
       sds.villager:
