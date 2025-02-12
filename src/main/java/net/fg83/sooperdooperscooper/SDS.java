@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class SDS extends JavaPlugin implements Listener {
 
@@ -252,6 +253,8 @@ public final class SDS extends JavaPlugin implements Listener {
                             continue;
                         }
 
+                        AtomicBoolean finishedAdmiring = new AtomicBoolean(false);
+
                         NBT.modify(piglin, nbt -> {
                             ReadWriteNBT brain = nbt.getCompound("Brain");
                             assert brain != null;
@@ -259,7 +262,6 @@ public final class SDS extends JavaPlugin implements Listener {
                             assert memories != null;
 
                             if (memories.hasTag("minecraft:admiring_item")){
-
                                 ReadWriteNBT admiring = memories.getCompound("minecraft:admiring_item");
                                 assert admiring != null;
                                 long ttl = admiring.getLong("ttl");
@@ -267,20 +269,29 @@ public final class SDS extends JavaPlugin implements Listener {
                                     admiring.setLong("ttl", ttl - 1);
                                 }
                                 else {
-                                    piglin.getInventory().clear();
-                                    Objects.requireNonNull(piglin.getEquipment()).setItemInOffHand(null);
-                                    memories.clearNBT();
-
-                                    LootContext.Builder lootContextBuilder = new LootContext.Builder(piglin.getLocation()).lootedEntity(getServer().getOnlinePlayers().stream().findFirst().orElseThrow());
-
-                                    List<ItemStack> outputItems = new ArrayList<>(LootTables.PIGLIN_BARTERING.getLootTable().populateLoot(null, lootContextBuilder.build()));
-
-                                    for (ItemStack item : outputItems){
-                                        piglin.getWorld().dropItem(piglin.getLocation(), item);
-                                    }
+                                    finishedAdmiring.set(true);
                                 }
                             }
                         });
+                        if (finishedAdmiring.get()){
+                            piglin.getInventory().clear();
+                            NBT.modify(piglin, nbt -> {
+                                ReadWriteNBT brain = nbt.getCompound("Brain");
+                                assert brain != null;
+                                ReadWriteNBT memories = brain.getCompound("memories");
+                                assert memories != null;
+                                memories.clearNBT();
+                            });
+                            Objects.requireNonNull(piglin.getEquipment()).setItemInOffHand(null);
+
+                            LootContext.Builder lootContextBuilder = new LootContext.Builder(piglin.getLocation()).lootedEntity(getServer().getOnlinePlayers().stream().findFirst().orElseThrow());
+
+                            List<ItemStack> outputItems = new ArrayList<>(LootTables.PIGLIN_BARTERING.getLootTable().populateLoot(null, lootContextBuilder.build()));
+
+                            for (ItemStack item : outputItems){
+                                piglin.getWorld().dropItem(piglin.getLocation(), item);
+                            }
+                        }
                     }
                 }
             }
