@@ -1,11 +1,9 @@
 package net.fg83.sooperdooperscooper;
 
-
+import de.tr7zw.changeme.nbtapi.NBT;
 import net.fg83.sooperdooperscooper.listener.NametagListener;
 import net.fg83.sooperdooperscooper.task.PiglinCountdownTask;
 import net.fg83.sooperdooperscooper.task.VillagerRestockTask;
-
-import de.tr7zw.changeme.nbtapi.NBT;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -60,6 +58,7 @@ public class SDS extends JavaPlugin {
             getPluginLoader().disablePlugin(this);
             return;
         }
+
         getServer().getScheduler().runTaskTimer(this, new PiglinCountdownTask(), 0, 1);
     }
 }
